@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presupuesto</title>
+    <!------ Style -------->
+    <link rel="stylesheet" href="./style/style.css">
+    <!------ Bootstrap -------->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <!------ Javascript-------->
+    <script src="main.js" defer type="module"></script>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <section id="total">
+            <div class="container text-center">
+                <h1>Presupuesto Disponible:</h1>
+                <span id="presupuesto" class="fs-1">$</span>
+                <br><br>
+                <div class="row montoIngresos w-50 mx-auto text-start p-2 my-2">
+                    <p class="col 4">Monto Ingresos</p>
+                    <p id="montoIngresos" class="col-2">$</p>
+                </div>
+                <div class="row montoEgresos w-50 mx-auto text-start p-2 my-2">
+                    <p class="col 4">Monto Egresos</p>
+                    <p id="montoEgresos" class="col-3">$</p>
+                    <span class="col-2" id="porcentajeE">%</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="calculo">
+            <div class="container text-center mt-5">
+                <form id="formEnvio" class="row justify-content-center">
+                    <select id="type" class="col-2 form-select" aria-label="Default select example">
+                        <option value="1">+</option>
+                        <option value="2">-</option>
+                    </select>
+
+                    <input type="text" class="col-6 form-control" id="description" placeholder="Description">
+
+                    <input type="text" class="col-4 form-control" id="amount" placeholder="$$$$$">
+
+                    <button id="button" class="cssbuttons-io-button col-1">Add
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                <path fill="none" d="M0 0h24v24H0z"></path>
+                                <path fill="currentColor"
+                                    d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z">
+                                </path>
+                            </svg>
+                        </div>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section id="datos" class="container px-5 mx-auto row justify-content-evenly mt-5">
+            <div class="col-4 container-table row justify-content-center flex-wrap" id="ingresos">
+                <div class="title col-9 d-flex justify-content-center">
+                    <h2 style="color:white">Ingresos</h2>
+                </div>
+                <table id="tablaIngresos" class="table table-info justify-content-center">
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-4 container-table row justify-content-center flex-wrap" id="egresos">
+                <div class="title col-9 d-flex justify-content-center">
+                    <h2 style="color:white">Egresos</h2>
+                </div>
+                <table id="tablaEgresos" class="table table-info justify-content-center">
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="graficas">
+            <div class="container">
+                <div class="row">
+                    <div class="d-grid gap mt-5" id="reload">
+                        <button class=" button w-75 mx-auto text-start p-2 my-2 text-center">Actualizar
+                            Gráfica
+                        </button>
+                    </div>
+                    <div id="c2" class="col 1 h-25 w-25">
+                        <div id="chart-container" class="chart "></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <!------ Bootstrap Javascript-------->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+        crossorigin="anonymous"></script>
+    <!------- Apache --------->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js"></script>
+</body>
+
+</html>
