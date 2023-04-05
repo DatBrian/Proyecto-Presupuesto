@@ -27,11 +27,49 @@
 .montoIngresos {
     background: linear-gradient(90deg, #bdc3ff 0%, #00d2ff 100%);
     border-radius: 5px;
+    width: 50%;
+    margin-right: auto !important;
+    margin-left: auto !important;
 }
 
 .montoEgresos {
     background: linear-gradient(90deg, #FF6767 0%, #fff454cd 100%);
     border-radius: 5px;
+    width: 50%;
+    margin-right: auto !important;
+    margin-left: auto !important;
+}
+
+@media (max-width:600px) {
+
+    #montoIngresos {
+        margin-right: 60px;
+        width: 100%;
+    }
+
+    #montoEgresos {
+        margin-right: 40px;
+        width: 100%;
+    }
+
+    .montoIngresos,
+    .montoEgresos {
+        width: 100%;
+    }
+
+    #porcentajeE {
+        display: none;
+    }
+}
+
+@media (min-width:601px) and (max-width:992px) {
+
+    .montoIngresos,
+    .montoEgresos {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+        width: 100%;
+    }
 }
 
 
@@ -108,6 +146,84 @@
     transform: scale(0.95);
 }
 
+@media (max-width:600px) {
+
+    #type {
+        width: 100%;
+    }
+
+    #description {
+        width: 100%;
+    }
+
+    #amount {
+        width: 100%;
+    }
+
+    #button {
+        width: 100%;
+    }
+
+}
+
+@media(min-width:601px) and (max-width:992px) {
+
+    #type {
+        width: 20%;
+    }
+
+    #description {
+        width: 80%;
+    }
+
+    #amount {
+        width: 80%;
+    }
+
+    #button {
+        width: 20%;
+    }
+}
+
+/* @media(min-width:300px) and (max-width:900px) {
+
+    #type {
+        width: 100%;
+    }
+
+    #description {
+        width: 100%;
+    }
+
+    #amount {
+        width: 100%;
+    }
+
+    #button {
+        width: 100%;
+    }
+
+}
+
+@media(min-width:901px) and (max-width:1200px) {
+
+    #type {
+        width: 10%;
+    }
+
+    #description {
+        width: 50%;
+    }
+
+    #amount {
+        width: 50%;
+    }
+
+    #button {
+        width: 10%;
+    }
+} */
+
 /*******SEGUNDA SECCION******/
 
 /*******TERCERA SECCION******/
@@ -147,7 +263,59 @@
 #egresos {
     height: 362px;
     padding: 1px;
+    width: 100;
 }
+
+@media (max-width:767px) {
+    #datos {
+        padding: 0 !important;
+    }
+
+    #ingresos,
+    #egresos {
+        width: 100%;
+    }
+
+    #ingresos {
+        margin-bottom: 20px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+    #datos {
+        justify-content: space-around !important;
+    }
+
+    #ingresos,
+    #egresos {
+        width: 45%;
+    }
+}
+
+/* @media (max-width: 992px) {
+
+    #datos {
+        padding: 0 !important;
+    }
+
+    #ingresos,
+    #egresos {
+        width: 100%;
+    }
+
+    #ingresos {
+        margin-bottom: 20px;
+    }
+}
+
+@media(min-width:992px) and (max-width:1200px) {
+
+    #datos {
+        padding: 0 !important;
+    }
+
+} */
 
 
 /*******TERCERA SECCION******/
