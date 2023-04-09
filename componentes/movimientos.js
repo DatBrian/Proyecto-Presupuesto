@@ -19,12 +19,11 @@ export default {
                 description = "Sin descripción:"
             };
 
-            console.log(description);
-
             (!isNaN(parseInt(amount)) && amount > 0) ? ws.postMessage({ type: type, description: description, amount: parseInt(amount) })
                 : ("nada");
             // Enviamos los datos al worker
         });
+
 
         // Listener de eventos para el mensaje que recibe el worker
         ws.onmessage = ((e) => {
@@ -50,6 +49,14 @@ export default {
         });
 
 
+        //Botón para borrar los datos
+
+        let deleteButton = document.querySelector("#deleteButton");
+
+        deleteButton.addEventListener("click", (e) => {
+            deleteLocalStorage();
+            location.reload();
+        })
 
         function updateTable(tableId, plantilla) {
             document.querySelector(`#${tableId} tbody`).innerHTML = plantilla;
@@ -66,6 +73,11 @@ export default {
             egresos = JSON.parse(localStorage.getItem("Lista Egresos")) || [];
 
             ws.postMessage({ type: "load", data: { ingresos: ingresos, egresos: egresos } });
+        }
+
+        function deleteLocalStorage() {
+            confirm("Al eliminar todos los datos no podrá recuperar los movimientos, ¿Desea continuar?") ? localStorage.clear()
+                : ("nada");
         }
     }
 };

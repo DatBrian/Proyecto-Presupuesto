@@ -20,7 +20,6 @@ export default {
                 return;
             }
 
-            console.log("enviando: " + presupuesto, ingresos, egresos, type, amount);
             ws.postMessage({ presupuesto, ingresos, egresos, type, amount });
 
             ws.addEventListener("message", (e) => {
@@ -34,6 +33,9 @@ export default {
                 localStorage.setItem('presupuesto', presupuesto);
                 localStorage.setItem('ingresos', ingresos);
                 localStorage.setItem('egresos', egresos);
+                localStorage.setItem('porcentaje Egresos', porcentajeE);
+
+                console.log("datos cargados: " + presupuesto, ingresos, egresos, porcentajeE);
 
             });
 
@@ -64,7 +66,7 @@ export default {
             const presupuesto = parseInt(localStorage.getItem('presupuesto')) || 0;
             const ingresos = parseInt(localStorage.getItem('ingresos')) || 0;
             const egresos = parseInt(localStorage.getItem('egresos')) || 0;
-            const porcentajeE = parseFloat(localStorage.getItem('porcentajeE')) || 0;
+            const porcentajeE = parseFloat(localStorage.getItem('porcentaje Egresos')) || 0;
 
             document.querySelector("#presupuesto").innerHTML = presupuesto.toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
             document.querySelector("#montoIngresos").innerHTML = ingresos.toLocaleString('es-CO', { style: 'currency', currency: 'COP' });

@@ -20,9 +20,6 @@ class Egreso {
 self.onmessage = (e) => {
   let type = e.data.type;
   let description = e.data.description;
-  let amount = e.data.amount;
-
-  amount = amount.toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
 
   if (type === "load") {
 
@@ -32,9 +29,10 @@ self.onmessage = (e) => {
     // Creamos la plantilla
     const plantillaI = ingresos
       .map(
-        (val) => `
+        (val, index) => `
             <tr>
-              <th>${val.description}</th>
+              <td scope="row">${new Date().toLocaleDateString("es-CO")}</td>
+              <td>${val.description}</td>
               <td>${val.amount}</td>
             </tr>
           `
@@ -43,9 +41,10 @@ self.onmessage = (e) => {
 
     const plantillaE = egresos
       .map(
-        (val) => `
+        (val, index) => `
             <tr>
-              <th>${val.description}</th>
+              <td scope="row">${new Date().toLocaleDateString("es-CO")}</td>
+              <td>${val.description}</td>
               <td>${val.amount}</td>
             </tr>
           `
@@ -55,16 +54,20 @@ self.onmessage = (e) => {
     // Enviamos las plantillas al hilo principal
     self.postMessage({ type: "load", data: { plantillaI: plantillaI, plantillaE: plantillaE } });
 
-  } else if (type === "1") {
+  }
+
+  if (type === "1") {
+    let amount = (e.data.amount).toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
     let newIngreso = new Ingreso(description, amount);
     ingresos.unshift(newIngreso);
 
     // Creamos la plantilla
     const plantillaI = ingresos
       .map(
-        (val) => `
+        (val, index) => `
             <tr>
-              <th>${val.description}</th>
+              <td scope="row">${new Date().toLocaleDateString("es-CO")}</td>
+              <td>${val.description}</td>
               <td>${val.amount}</td>
             </tr>
           `
@@ -74,15 +77,18 @@ self.onmessage = (e) => {
     // Enviamos la plantilla al hilo principal
     self.postMessage({ type: "ingreso", data: ingresos, plantilla: plantillaI });
   } else if (type === "2") {
+    let amount = (e.data.amount).toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
+
     let newEgreso = new Egreso(description, amount);
     egresos.unshift(newEgreso);
 
     // Creamos la plantilla
     const plantillaE = egresos
       .map(
-        (val) => `
+        (val, index) => `
             <tr>
-              <th>${val.description}</th>
+              <td scope="row">${new Date().toLocaleDateString("es-CO")}</td>
+              <td>${val.description}</td>
               <td>${val.amount}</td>
             </tr>
           `

@@ -4,13 +4,13 @@ self.addEventListener("message", (e) => {
     let presupuesto = parseInt(e.data.presupuesto) || 0;
     let ingresos = parseInt(e.data.ingresos) || 0;
     let egresos = parseInt(e.data.egresos) || 0;
-    let porcentajeE = 0;
+    let porcentajeE = e.data.porcentajeE || 0;
 
     let type = e.data.type;
     let amount = parseInt(e.data.amount);
 
     if (isNaN(amount) || amount <= 0) {
-        console.log("Cantidad inválida recibida en el worker: ", amount);
+        alert("Ingrese una cantidad válida >:(");
         return;
     }
 
