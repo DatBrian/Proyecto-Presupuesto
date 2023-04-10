@@ -1,10 +1,10 @@
 import total from "./componentes/total.js";
 import movimientos from "./componentes/movimientos.js";
-import graficos from "./componentes/graficos.js"
+import grafico from "./componentes/grafico.js"
 import style from "./style/style.js";
 
 movimientos.all();
 total.all();
-graficos.all();
+grafico.all();
 style.all();
 
