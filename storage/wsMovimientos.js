@@ -2,7 +2,8 @@ let ingresos = [];
 let egresos = [];
 
 class Ingreso {
-  constructor(description, amount) {
+  constructor(date, description, amount) {
+    this['date'] = date;
     this['description'] = description;
     this['amount'] = amount;
   }
@@ -10,30 +11,32 @@ class Ingreso {
 }
 
 class Egreso {
-  constructor(description, amount) {
+  constructor(date, description, amount) {
+    this.date = date;
     this.description = description;
     this.amount = amount;
   }
 }
 
-// Listener de eventos para el mensaje que recibe el worker
+// Recibiendo mensajes del archivo principal
 self.onmessage = (e) => {
   let type = e.data.type;
   let description = e.data.description;
 
   if (type === "load") {
+    let date = new Date().toLocaleDateString("es-CO");
 
-    ingresos = e.data.data.ingresos.map((ingreso) => new Ingreso(ingreso.description, ingreso.amount));
-    egresos = e.data.data.egresos.map((egreso) => new Egreso(egreso.description, egreso.amount));
+    ingresos = e.data.data.ingresos.map((ingreso) => new Ingreso(date, ingreso.description, ingreso.amount));
+    egresos = e.data.data.egresos.map((egreso) => new Egreso(date, egreso.description, egreso.amount));
 
-    // Creamos la plantilla
+    // Creando plantilla
     const plantillaI = ingresos
       .map(
         (val, index) => `
             <tr>
-              <td scope="row">${new Date().toLocaleDateString("es-CO")}</td>
+              <td scope="row">${val.date}</td>
               <td>${val.description}</td>
-              <td>${val.amount}</td>
+              <td>${val.amount.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}</td>
             </tr>
           `
       )
@@ -43,60 +46,92 @@ self.onmessage = (e) => {
       .map(
         (val, index) => `
             <tr>
-              <td scope="row">${new Date().toLocaleDateString("es-CO")}</td>
+              <td scope="row">${val.date}</td>
               <td>${val.description}</td>
-              <td>${val.amount}</td>
+              <td>${val.amount.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}</td>
+              <td>
+                <button class="btn btn-danger" data-index="${index}" data-type="eliminarEgreso">
+                  Eliminar
+                </button>
+              </td>
             </tr>
           `
       )
       .join("");
 
-    // Enviamos las plantillas al hilo principal
+    // Enviando plantillas al archivo principal
     self.postMessage({ type: "load", data: { plantillaI: plantillaI, plantillaE: plantillaE } });
 
   }
 
   if (type === "1") {
-    let amount = (e.data.amount).toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
-    let newIngreso = new Ingreso(description, amount);
+    let amount = (e.data.amount);
+    let date = new Date().toLocaleDateString("es-CO");
+    let newIngreso = new Ingreso(date, description, amount);
     ingresos.unshift(newIngreso);
 
-    // Creamos la plantilla
+    // Creando la plantilla
     const plantillaI = ingresos
       .map(
         (val, index) => `
             <tr>
-              <td scope="row">${new Date().toLocaleDateString("es-CO")}</td>
+              <td scope="row">${val.date}</td>
               <td>${val.description}</td>
-              <td>${val.amount}</td>
+              <td>${val.amount.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}</td>
             </tr>
           `
       )
       .join("");
 
-    // Enviamos la plantilla al hilo principal
+    // Enviando plantilla al archivo principal
     self.postMessage({ type: "ingreso", data: ingresos, plantilla: plantillaI });
   } else if (type === "2") {
-    let amount = (e.data.amount).toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
-
-    let newEgreso = new Egreso(description, amount);
+    let amount = (e.data.amount);
+    let date = new Date().toLocaleDateString("es-CO");
+    let newEgreso = new Egreso(date, description, amount);
     egresos.unshift(newEgreso);
 
-    // Creamos la plantilla
+    // Creando la plantilla
     const plantillaE = egresos
       .map(
         (val, index) => `
             <tr>
-              <td scope="row">${new Date().toLocaleDateString("es-CO")}</td>
+              <td scope="row">${val.date}</td>
               <td>${val.description}</td>
-              <td>${val.amount}</td>
+              <td>${val.amount.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}</td>
+              <td>
+                <button class="btn btn-danger" data-index="${index}" data-type="eliminarEgreso">
+                  Eliminar
+                </button>
+              </td>
             </tr>
           `
       )
       .join("");
 
-    // Enviamos la plantilla al hilo principal
+    // Enviando la plantilla al archivo principal
     self.postMessage({ type: "egreso", data: egresos, plantilla: plantillaE });
+  }
+
+  if (type === "actualizarE") {
+    let amount = parseInt(e.data.data.amount);
+    let presupuesto = parseInt(e.data.data.presupuesto);
+    let egresos = parseInt(e.data.data.egresos);
+    let porcentajeE = e.data.data.porcentajeE;
+    let ingresos = (presupuesto + egresos)
+
+    presupuesto += amount;
+    egresos -= amount;
+    porcentajeE = (egresos * 100) / ingresos
+
+    self.postMessage({
+      type: "actualizarE",
+      data: {
+        "presupuesto": presupuesto,
+        "egresos": egresos,
+        "porcentajeE": porcentajeE
+      }
+    })
   }
 
 };

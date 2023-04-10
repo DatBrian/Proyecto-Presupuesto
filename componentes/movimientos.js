@@ -16,16 +16,16 @@ export default {
             let amount = document.querySelector("#amount").value;
 
             if (description === "") {
-                description = "Sin descripción:"
+                description = "Sin descripción"
             };
 
             (!isNaN(parseInt(amount)) && amount > 0) ? ws.postMessage({ type: type, description: description, amount: parseInt(amount) })
                 : ("nada");
-            // Enviamos los datos al worker
+            // Enviando datos al worker
         });
 
 
-        // Listener de eventos para el mensaje que recibe el worker
+        // Recibiendo datos del worker
         ws.onmessage = ((e) => {
             let type = e.data.type;
             let data = e.data.data;
@@ -48,6 +48,18 @@ export default {
             }
         });
 
+        //Botones indivuduales egresos
+
+        document.addEventListener("click", (e) => {
+            if (e.target.getAttribute("data-type") === "eliminarEgreso") {
+                let amount = 0
+                let index = parseInt(e.target.getAttribute("data-index"));
+                amount = parseInt(egresos[index]["amount"])
+                egresos.splice(index, 1);
+                localStorage.setItem("Lista Egresos", JSON.stringify(egresos));
+                actualizarE(amount);
+            }
+        });
 
         //Botón para borrar los datos
 
@@ -57,6 +69,8 @@ export default {
             deleteLocalStorage();
             location.reload();
         })
+
+        //Funciones
 
         function updateTable(tableId, plantilla) {
             document.querySelector(`#${tableId} tbody`).innerHTML = plantilla;
@@ -78,6 +92,39 @@ export default {
         function deleteLocalStorage() {
             confirm("Al eliminar todos los datos no podrá recuperar los movimientos, ¿Desea continuar?") ? localStorage.clear()
                 : ("nada");
+        }
+
+        function actualizarE(amount) {
+            let presupuesto = localStorage.getItem("presupuesto");
+            let egresos = localStorage.getItem("egresos");
+            let porcentajeE = localStorage.getItem("porcentaje Egresos");
+
+            ws.postMessage({
+                type: "actualizarE",
+                data: {
+                    "amount": amount,
+                    "presupuesto": presupuesto,
+                    "egresos": egresos,
+                    "porcentajeE": porcentajeE
+                }
+            })
+
+            ws.onmessage = (e) => {
+                let type = e.data.type;
+
+                if (type === "actualizarE") {
+                    let presupuesto = e.data.data.presupuesto;
+                    let egresos = e.data.data.egresos;
+                    let porcentajeE = e.data.data.porcentajeE;
+
+                    localStorage.setItem("presupuesto", presupuesto)
+                    localStorage.setItem("egresos", egresos)
+                    localStorage.setItem("porcentaje Egresos", porcentajeE)
+                }
+            }
+
+            location.reload();
+
         }
     }
 };
