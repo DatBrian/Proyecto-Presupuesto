@@ -177,17 +177,10 @@
 
 /*******TERCERA SECCION******/
 
-
-
 .title {
     height: max-content;
     width: -webkit-fill-available !important;
     border-bottom: white solid 1px;
-}
-
-.container-table {
-    max-height: 362px;
-    overflow: auto;
 }
 
 .table {
@@ -208,7 +201,10 @@
 
 #ingresos,
 #egresos {
-    padding: 1px;
+    overflow: auto;
+    min-height: 100px;
+    height: initial;
+    padding: 10px;
     width: 100;
 }
 

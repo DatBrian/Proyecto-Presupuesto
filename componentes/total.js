@@ -11,12 +11,20 @@ export default {
             let amount = parseInt(document.querySelector("#amount").value);
 
             if (isNaN(amount)) {
-                alert("Ingrese un valor válido >:(");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Ingresa un valor válido!',
+                })
                 return;
             }
 
             if (amount <= 0) {
-                alert("Ingrese un valor válido >:(");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Ingresa un valor válido!',
+                })
                 return;
             }
 

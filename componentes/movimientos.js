@@ -52,15 +52,40 @@ export default {
 
         document.addEventListener("click", (e) => {
             if (e.target.getAttribute("data-type") === "eliminarEgreso") {
-                let amount = 0;
-                let index = parseInt(e.target.getAttribute("data-index"));
-                egresos = JSON.parse(localStorage.getItem("Lista Egresos"));
-                console.log(egresos)
-                console.log(egresos[0]["amount"])
-                amount = parseInt(egresos[index]["amount"]);
-                egresos.splice(index, 1);
-                localStorage.setItem("Lista Egresos", JSON.stringify(egresos));
-                actualizarE(amount);
+
+                Swal.fire({
+                    title: 'Estas seguro?',
+                    text: "Al eliminar este movimiento no podrás recuperarlo",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, eliminalo'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        let amount = 0;
+                        let index = parseInt(e.target.getAttribute("data-index"));
+                        egresos = JSON.parse(localStorage.getItem("Lista Egresos"));
+                        console.log(egresos)
+                        console.log(egresos[0]["amount"])
+                        amount = parseInt(egresos[index]["amount"]);
+                        egresos.splice(index, 1);
+                        localStorage.setItem("Lista Egresos", JSON.stringify(egresos));
+                        actualizarE(amount);
+
+                        Swal.fire(
+                            'Hecho!',
+                            'Movimiento Eliminado',
+                            'success'
+                        );
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000);
+                    }
+                })
+
+
             }
         });
 
@@ -70,7 +95,6 @@ export default {
 
         deleteButton.addEventListener("click", (e) => {
             deleteLocalStorage();
-            location.reload();
         })
 
         //Funciones
@@ -93,9 +117,33 @@ export default {
         }
 
         function deleteLocalStorage() {
-            confirm("Al eliminar todos los datos no podrá recuperar los movimientos, ¿Desea continuar?") ? localStorage.clear()
-                : ("nada");
+            Swal.fire({
+                title: 'Estas seguro?',
+                text: "Al eliminar todos los datos no podrás recuperar tus movimientos",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, eliminalos'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.clear();
+                    Swal.fire(
+                        'Hecho!',
+                        'Tus datos han sido eliminados.',
+                        'success'
+                    );
+                    setTimeout(function () {
+                        location.reload();
+                    }, 2000);
+                }
+            })
         }
+
+        // function deleteLocalStorage() {
+        //     confirm("Al eliminar todos los datos no podrá recuperar los movimientos, ¿Desea continuar?") ? localStorage.clear()
+        //         : ("nada");
+        // }
 
         function actualizarE(amount) {
             let presupuesto = localStorage.getItem("presupuesto");
@@ -125,9 +173,6 @@ export default {
                     localStorage.setItem("porcentaje Egresos", porcentajeE)
                 }
             }
-
-            location.reload();
-
         }
     }
 };

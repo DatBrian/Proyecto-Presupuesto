@@ -1,10 +1,10 @@
 export default {
     all() {
-        const select = document.querySelector("#type");
+        let select = document.querySelector("#type");
+        let button = document.querySelector("#button");
+        let form = document.querySelector("#formEnvio");
 
         select.addEventListener("change", (e) => {
-            let button = document.querySelector("#button");
-
             if (select.value === "1") {
                 button.style.background = `linear-gradient(90deg, #00d2ff 0%, #bdc3ff 100%)`;
             } else if (select.value === "2") {
@@ -12,7 +12,11 @@ export default {
             } else {
                 button.style.background = "";
             }
+        });
 
+        form.addEventListener("reset", (e) => {
+            button.style.background = `linear-gradient(90deg, #00d2ff 0%, #bdc3ff 100%)`;
         })
+
     }
 }

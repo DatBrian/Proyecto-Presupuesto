@@ -13,6 +13,14 @@
         integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <!------ Javascript-------->
     <script src="main.js" defer type="module"></script>
+
+    <script src="
+    https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js
+    "></script>
+    <link href="
+    https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css
+    " rel="stylesheet">
+
 </head>
 
 <body>
@@ -63,23 +71,25 @@
         </section>
 
         <section id="datos" class="container px-5 mx-auto row justify-content-evenly mt-5">
-            <div class="col-4 container-table row justify-content-center flex-wrap" id="ingresos">
-                <div class="title col-9 d-flex justify-content-center">
-                    <h2 style="color:white">Ingresos</h2>
+            <div id="containerAll" class="row justify-content-evenly">
+                <div class="col-4 container-table row justify-content-center flex-wrap" id="ingresos">
+                    <div class="title col-9 d-flex justify-content-center">
+                        <h2 style="color:white">Ingresos</h2>
+                    </div>
+                    <table id="tablaIngresos" class="table table-light justify-content-center mt-4">
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
-                <table id="tablaIngresos" class="table table-light justify-content-center mt-4">
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-4 container-table row justify-content-center flex-wrap" id="egresos">
-                <div class="title col-9 d-flex justify-content-center">
-                    <h2 style="color:white">Egresos</h2>
+                <div class="col-4 container-table row justify-content-center flex-wrap" id="egresos">
+                    <div class="title col-9 d-flex justify-content-center">
+                        <h2 style="color:white">Egresos</h2>
+                    </div>
+                    <table id="tablaEgresos" class="table table-light justify-content-center mt-4">
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
-                <table id="tablaEgresos" class="table table-light justify-content-center mt-4">
-                    <tbody>
-                    </tbody>
-                </table>
             </div>
         </section>
 
