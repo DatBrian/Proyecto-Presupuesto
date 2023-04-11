@@ -220,6 +220,10 @@
     opacity: 1;
 }
 
+#tablaIngresos:hover>tbody tr td button {
+    opacity: 1;
+}
+
 .btnd::after {
     width: fit-content;
     height: fit-content;

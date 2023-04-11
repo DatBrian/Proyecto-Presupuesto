@@ -67,12 +67,49 @@ export default {
                         let amount = 0;
                         let index = parseInt(e.target.getAttribute("data-index"));
                         egresos = JSON.parse(localStorage.getItem("Lista Egresos"));
-                        console.log(egresos)
-                        console.log(egresos[0]["amount"])
                         amount = parseInt(egresos[index]["amount"]);
                         egresos.splice(index, 1);
                         localStorage.setItem("Lista Egresos", JSON.stringify(egresos));
                         actualizarE(amount);
+
+                        Swal.fire(
+                            'Hecho!',
+                            'Movimiento Eliminado',
+                            'success'
+                        );
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1000);
+                    }
+                })
+
+
+            }
+        });
+
+        //Botones individuales Ingresos
+
+        document.addEventListener("click", (e) => {
+            if (e.target.getAttribute("data-type") === "eliminarIngreso") {
+
+                Swal.fire({
+                    title: 'Estas seguro?',
+                    text: "Al eliminar este movimiento no podrás recuperarlo",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, eliminalo'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        let amount = 0;
+                        let index = parseInt(e.target.getAttribute("data-index"));
+                        ingresos = JSON.parse(localStorage.getItem("Lista Ingresos"));
+                        amount = parseInt(ingresos[index]["amount"]);
+                        ingresos.splice(index, 1);
+                        localStorage.setItem("Lista Ingresos", JSON.stringify(ingresos));
+                        actualizarI(amount);
 
                         Swal.fire(
                             'Hecho!',
@@ -88,6 +125,7 @@ export default {
 
             }
         });
+
 
         //Botón para borrar los datos
 
@@ -135,15 +173,10 @@ export default {
                     );
                     setTimeout(function () {
                         location.reload();
-                    }, 2000);
+                    }, 1000);
                 }
             })
         }
-
-        // function deleteLocalStorage() {
-        //     confirm("Al eliminar todos los datos no podrá recuperar los movimientos, ¿Desea continuar?") ? localStorage.clear()
-        //         : ("nada");
-        // }
 
         function actualizarE(amount) {
             let presupuesto = localStorage.getItem("presupuesto");
@@ -171,6 +204,32 @@ export default {
                     localStorage.setItem("presupuesto", presupuesto)
                     localStorage.setItem("egresos", egresos)
                     localStorage.setItem("porcentaje Egresos", porcentajeE)
+                }
+            }
+        }
+
+        function actualizarI(amount) {
+            let presupuesto = localStorage.getItem("presupuesto");
+            let ingresos = localStorage.getItem("ingresos");
+
+            ws.postMessage({
+                type: "actualizarI",
+                data: {
+                    "amount": amount,
+                    "presupuesto": presupuesto,
+                    "ingresos": ingresos,
+                }
+            })
+
+            ws.onmessage = (e) => {
+                let type = e.data.type;
+
+                if (type === "actualizarI") {
+                    let presupuesto = e.data.data.presupuesto;
+                    let ingresos = e.data.data.ingresos;
+
+                    localStorage.setItem("presupuesto", presupuesto)
+                    localStorage.setItem("ingresos", ingresos)
                 }
             }
         }
