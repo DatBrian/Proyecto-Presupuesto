@@ -52,9 +52,12 @@ export default {
 
         document.addEventListener("click", (e) => {
             if (e.target.getAttribute("data-type") === "eliminarEgreso") {
-                let amount = 0
+                let amount = 0;
                 let index = parseInt(e.target.getAttribute("data-index"));
-                amount = parseInt(egresos[index]["amount"])
+                egresos = JSON.parse(localStorage.getItem("Lista Egresos"));
+                console.log(egresos)
+                console.log(egresos[0]["amount"])
+                amount = parseInt(egresos[index]["amount"]);
                 egresos.splice(index, 1);
                 localStorage.setItem("Lista Egresos", JSON.stringify(egresos));
                 actualizarE(amount);
