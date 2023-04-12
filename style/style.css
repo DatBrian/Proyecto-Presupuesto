@@ -266,7 +266,7 @@ path {
     pointer-events: none !important;
 }
 
-@media (max-width:767px) {
+@media (max-width:1200px) {
     #datos {
         padding: 0 !important;
     }
@@ -281,7 +281,7 @@ path {
     }
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
+/* @media (min-width: 768px) and (max-width: 1024px) {
 
     #datos {
         justify-content: space-around !important;
@@ -291,7 +291,7 @@ path {
     #egresos {
         width: 45%;
     }
-}
+} */
 
 
 /*******TERCERA SECCION******/
